@@ -5,36 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <h1>NoSleep Test Page</h1>
     <script src="./modules/NoSleep.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <input type="button" id="toggle" value="Wake Lock is disabled" />
-
+    
+    <link rel="stylesheet" type="text/css" href="./css/index.css"/>
+    
+    
+    <div class="wrapper">
+        <h1 id="page-title">Teste Nosleep.js</h1>
+        <input type="button" id="toggle" value="toggle nosleep" style="padding: 5px 20px; border-radius: 5px;"/>
+        <p><span id="seconds">00</span>:<span id="tens">00</span></p>
+    </div> 
     <script>
-      var noSleep = new NoSleep();
 
-      var wakeLockEnabled = true;
-      var toggleEl = document.querySelector("#toggle");
-      $(document).ready(function(){
-        console.log('sleep function enabled')
-        document.body.style.backgroundColor = "green";
-        noSleep.enable();
-      });
-      toggleEl.addEventListener('click', function() {
-        if (!wakeLockEnabled) {
-          noSleep.enable(); // keep the screen on!
-          wakeLockEnabled = true;
-          toggleEl.value = "Wake Lock is enabled";
-          document.body.style.backgroundColor = "green";
-        } else {
-          noSleep.disable(); // let the screen turn off.
-          wakeLockEnabled = false;
-          toggleEl.value = "Wake Lock is disabled";
-          document.body.style.backgroundColor = "";
+        var noSleep = new NoSleep();
+
+        var wakeLockEnabled = true;
+        var toggleEl = document.querySelector("#toggle");
+        
+        // timer
+        var seconds = 0; 
+        var tens = 0; 
+        var appendTens = document.getElementById("tens");
+        var appendSeconds = document.getElementById("seconds");
+        var pageTitle = document.getElementById("page-title")
+        var Interval ;
+        function startTimer(){
+            tens++; 
+            
+            if(tens <= 9){
+                appendTens.innerHTML = "0" + tens;
+            }
+            
+            if (tens > 9){
+                appendTens.innerHTML = tens; 
+            } 
+            if (tens > 99) {
+                seconds++;
+                appendSeconds.innerHTML = "0" + seconds;
+                tens = 0;
+                appendTens.innerHTML = "0" + 0;
+            }
+            if (seconds > 9){
+                appendSeconds.innerHTML = seconds;
+            }
         }
-      }, false);
-    </script>
 
+        // Carregamento da página
+        $(document).ready(function(){
+            console.log('sleep ativado')
+            //document.body.style.backgroundColor = "green";
+            noSleep.enable();
+            document.body.style.backgroundColor = "green";
+
+            interval = setInterval(startTimer, 10)
+        });
+        
+        toggleEl.addEventListener('click', function() {
+            if (!wakeLockEnabled) {
+            noSleep.enable(); // keep the screen on!
+            wakeLockEnabled = true;
+            document.body.style.backgroundColor = "green";
+            } else {
+            noSleep.disable(); // let the screen turn off.
+            wakeLockEnabled = false;
+            document.body.style.backgroundColor = "";
+            }
+        }, false);
+    </script>
     <!-- Github Ribbon -->
   </body>
 </html>
