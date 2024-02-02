@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NoSleep.js - Simple Test Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <h1>NoSleep Test Page</h1>
+    <script src="./modules/NoSleep.js/dist/NoSleep.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <input type="button" id="toggle" value="Wake Lock is disabled" />
+
+    <script>
+      var noSleep = new NoSleep();
+
+      var wakeLockEnabled = false;
+      var toggleEl = document.querySelector("#toggle");
+      $(document).ready(function(){
+        console.log('sleep function enabled')
+        document.body.style.backgroundColor = "green";
+        noSleep.enable();
+      });
+    </script>
+
+    <!-- Github Ribbon -->
+  </body>
+</html>
